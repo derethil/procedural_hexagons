@@ -1,6 +1,8 @@
+import * as THREE from "three";
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls } from "@react-three/drei";
+import Hexagon from "./objects/Hexagon";
 
 export default function Fiber() {
   return (
@@ -10,10 +12,11 @@ export default function Fiber() {
       </Suspense>
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      <mesh>
-        <sphereGeometry args={[1]} />
+
+      <Hexagon height={1} newPosition={new THREE.Vector2(0, 0)}>
         <meshStandardMaterial roughness={0} metalness={1} />
-      </mesh>
+      </Hexagon>
+
       <OrbitControls dampingFactor={0.05} enableDamping />
     </Canvas>
   );
