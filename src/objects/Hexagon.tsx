@@ -1,5 +1,5 @@
-import * as THREE from "three";
-import { MeshProps } from "../types";
+import { Vector3 } from "three";
+import { MeshProps } from "@react-three/fiber";
 
 type HexagonProps = {
   height: number;
@@ -7,7 +7,7 @@ type HexagonProps = {
 } & MeshProps;
 
 export default function Hexagon(props: HexagonProps) {
-  const position = new THREE.Vector3(
+  const position = new Vector3(
     props.newPosition.x,
     props.height * 0.5,
     props.newPosition.y
