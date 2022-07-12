@@ -13,9 +13,6 @@ export default function Fiber() {
         <Environment files="/assets/envmap.hdr" />
       </Suspense>
 
-      <ambientLight />
-      <pointLight position={[10, 10, 10]} />
-
       <OrbitControls dampingFactor={0.05} enableDamping />
 
       <Hexagons>

@@ -20,9 +20,10 @@ export default function Hexagons(props: HexagonProps) {
   const hexagons = useMemo(() => {
     let hexagons = [] as CylinderGeometry[];
 
-    for (let i = -10; i <= 10; i++) {
-      for (let j = -10; j <= 10; j++) {
+    for (let i = -15; i <= 15; i++) {
+      for (let j = -15; j <= 15; j++) {
         const position = tileToPosition(new Vector2(i, j));
+        if (position.length() > 16) continue;
         hexagons.push(makeHexagon(3, position));
       }
     }
