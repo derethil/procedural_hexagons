@@ -58,17 +58,22 @@ const makeStone = (height: number, position: Vector2) => {
 
 function makeTree(height: number, position: Vector2) {
   const treeHeight = Math.random() * 1 + 1.25;
+  const rotation = Math.random() * Math.PI * 2;
 
   const geometry = new CylinderGeometry(0, 1.5, treeHeight, 3);
+  geometry.rotateY(rotation);
   geometry.translate(position.x, height + treeHeight * 0 + 1, position.y);
 
   const geometry2 = new CylinderGeometry(0, 1.15, treeHeight, 3);
+  geometry2.rotateY(rotation);
   geometry2.translate(position.x, height + treeHeight * 0.6 + 1, position.y);
 
   const geometry3 = new CylinderGeometry(0, 0.8, treeHeight, 3);
+  geometry3.rotateY(rotation);
   geometry3.translate(position.x, height + treeHeight * 1.25 + 1, position.y);
 
-  return mergeBufferGeometries([geometry, geometry2, geometry3]);
+  const tree = mergeBufferGeometries([geometry, geometry2, geometry3]);
+  return tree;
 }
 
 export default function Hexagons(props: HexagonProps) {
@@ -153,7 +158,7 @@ export default function Hexagons(props: HexagonProps) {
     <>
       <HexagonGroup
         geometry={mergedHexagonGeometries.stone}
-        color={new Color("#626170")}
+        color={new Color("#83819c")}
       />
       <HexagonGroup
         geometry={mergedHexagonGeometries.dirt}
