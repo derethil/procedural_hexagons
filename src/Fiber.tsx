@@ -10,7 +10,7 @@ export default function Fiber() {
       <ThreeConfig />
 
       <Suspense fallback={null}>
-        <Environment files="/assets/envmap.hdr" />
+        <Environment files="/assets/envmaps/envmap.hdr" />
       </Suspense>
 
       <PerspectiveCamera position={[0, 25, 50]} makeDefault />
