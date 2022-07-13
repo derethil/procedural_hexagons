@@ -23,7 +23,7 @@ export default function Clouds(props: CloudProps) {
       const cloudGeo = mergeBufferGeometries([puff1, puff2, puff3]);
       cloudGeo.translate(
         Math.random() * 20 - 10,
-        Math.random() * 7 + 7,
+        Math.random() * 7 + 10,
         Math.random() * 20 - 10
       );
       cloudGeo.rotateY(Math.random() * Math.PI * 2);
