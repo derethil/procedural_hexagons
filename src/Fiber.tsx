@@ -1,4 +1,4 @@
-import { Suspense, useRef } from "react";
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import ThreeConfig from "./ThreeConfig";
@@ -13,11 +13,13 @@ export default function Fiber() {
         <Environment files="/assets/envmap.hdr" />
       </Suspense>
 
+      <PerspectiveCamera position={[0, 25, 50]} makeDefault />
+
       <OrbitControls
         dampingFactor={0.5}
         minDistance={35}
-        enableZoom={false}
         position={[0, 10, 0]}
+        enablePan={false}
       />
 
       <Hexagons pseudoRadius={20} maxHeight={10}>

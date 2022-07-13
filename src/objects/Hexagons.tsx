@@ -39,7 +39,7 @@ export default function Hexagons(props: HexagonProps) {
     }
 
     return hexagons;
-  }, []);
+  }, [props.maxHeight, props.pseudoRadius]);
 
   const mergedHexagons = useMemo(() => {
     const base = new BoxBufferGeometry(0, 0, 0);
