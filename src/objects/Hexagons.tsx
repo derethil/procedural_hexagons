@@ -4,15 +4,14 @@ import SimplexNoise from "simplex-noise";
 import {
   BoxBufferGeometry,
   BufferGeometry,
+  Color,
   CylinderGeometry,
   SphereGeometry,
   Vector2,
 } from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { MeshProps } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
 
-import { textureAssets } from "../assets";
 import HexagonGroup from "./HexagonGroup";
 
 interface HexagonProps extends MeshProps {
@@ -74,7 +73,6 @@ function makeTree(height: number, position: Vector2) {
 
 export default function Hexagons(props: HexagonProps) {
   const maxHeights = getMaxHeights(props.maxHeight);
-  const textures = useTexture(textureAssets);
 
   // Generate each hexagon geometry individually
   const hexagons = useMemo(() => {
@@ -90,8 +88,9 @@ export default function Hexagons(props: HexagonProps) {
 
         let noise = (simplex.noise2D(i * 0.1, j * 0.1) + 1) * 0.5; // Shrink then normalize the noise data
         noise = Math.pow(noise, 1.5);
+        console.log(noise * props.maxHeight);
         hexagons.push({
-          hexagon: makeHexagon(noise * props.maxHeight, position),
+          hexagon: makeHexagon(Math.max(0.5, noise * props.maxHeight), position),
           position,
         });
       }
@@ -152,11 +151,26 @@ export default function Hexagons(props: HexagonProps) {
 
   return (
     <>
-      <HexagonGroup geometry={mergedHexagonGeometries.stone} texture={textures.stone} />
-      <HexagonGroup geometry={mergedHexagonGeometries.dirt} texture={textures.dirt} />
-      <HexagonGroup geometry={mergedHexagonGeometries.grass} texture={textures.grass} />
-      <HexagonGroup geometry={mergedHexagonGeometries.sand} texture={textures.sand} />
-      <HexagonGroup geometry={mergedHexagonGeometries.dirt2} texture={textures.dirt2} />
+      <HexagonGroup
+        geometry={mergedHexagonGeometries.stone}
+        color={new Color("#626170")}
+      />
+      <HexagonGroup
+        geometry={mergedHexagonGeometries.dirt}
+        color={new Color("#55432c")}
+      />
+      <HexagonGroup
+        geometry={mergedHexagonGeometries.grass}
+        color={new Color("#31703a")}
+      />
+      <HexagonGroup
+        geometry={mergedHexagonGeometries.sand}
+        color={new Color("#feffae")}
+      />
+      <HexagonGroup
+        geometry={mergedHexagonGeometries.dirt2}
+        color={new Color("#795d42")}
+      />
     </>
   );
 }

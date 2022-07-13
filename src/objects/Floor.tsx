@@ -9,11 +9,6 @@ interface FloorProps extends GroupProps {
 }
 
 export default function Floor(props: FloorProps) {
-  const [dirtTexture, dirt2Texture] = useTexture([
-    textureAssets.dirt,
-    textureAssets.dirt2,
-  ]);
-
   return (
     <group>
       <mesh receiveShadow position={[0, props.maxHeight * 0.125, 0]}>
@@ -23,7 +18,7 @@ export default function Floor(props: FloorProps) {
         />
         <meshPhysicalMaterial
           attach="material"
-          map={dirtTexture}
+          color="#795d42"
           envMapIntensity={0.2}
           side={DoubleSide}
         />
@@ -37,7 +32,7 @@ export default function Floor(props: FloorProps) {
           attach="material"
           side={DoubleSide}
           envMapIntensity={0.1}
-          map={dirt2Texture}
+          color="#55432c"
         />
       </mesh>
     </group>
