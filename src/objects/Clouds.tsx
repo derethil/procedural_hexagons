@@ -7,7 +7,7 @@ import { MeshProps } from "@react-three/fiber";
 interface CloudProps extends MeshProps {}
 
 export default function Clouds(props: CloudProps) {
-  const mergedPuffs = useMemo(() => {
+  const mergedPuffs = () => {
     const count = Math.floor(Math.pow(Math.random(), 0.45) * 4);
     let mergedPuffs = new SphereGeometry(0, 0, 0);
 
@@ -33,10 +33,10 @@ export default function Clouds(props: CloudProps) {
     }
 
     return mergedPuffs;
-  }, []);
+  };
 
   return (
-    <mesh geometry={mergedPuffs}>
+    <mesh geometry={mergedPuffs()}>
       <meshStandardMaterial attach="material" flatShading envMapIntensity={0.75} />
     </mesh>
   );

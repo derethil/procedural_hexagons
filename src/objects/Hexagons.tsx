@@ -19,6 +19,7 @@ interface HexagonProps extends MeshProps {
   pseudoRadius: number;
   gridLength: number;
   maxHeight: number;
+  seed: string;
 }
 
 interface Tile {
@@ -79,7 +80,7 @@ export default function Hexagons(props: HexagonProps) {
   const hexagons = useMemo(() => {
     let hexagons = [] as Tile[];
 
-    const simplex = new SimplexNoise();
+    const simplex = new SimplexNoise(props.seed);
 
     const max = props.gridLength * 0.5;
     for (let i = -max; i <= max; i++) {
@@ -97,7 +98,7 @@ export default function Hexagons(props: HexagonProps) {
     }
 
     return hexagons;
-  }, [props.maxHeight, props.pseudoRadius, props.gridLength]);
+  }, [props.maxHeight, props.pseudoRadius, props.gridLength, props.seed]);
 
   // Merge all hexagons into their respective geometries
   const mergedHexagonGeometries = useMemo(() => {

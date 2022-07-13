@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { Color } from "three";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei";
@@ -11,7 +11,7 @@ import Clouds from "./objects/Clouds";
 
 import { envmapAssets } from "./assets";
 
-export default function Fiber() {
+export default function Fiber({ seed }: { seed: string }) {
   const maxHeight = 10;
 
   return (
@@ -39,7 +39,7 @@ export default function Fiber() {
 
       <Suspense fallback={null}>
         <Environment files={envmapAssets.main} />
-        <Hexagons pseudoRadius={16} gridLength={40} maxHeight={maxHeight}></Hexagons>
+        <Hexagons seed={seed} pseudoRadius={16} gridLength={40} maxHeight={maxHeight} />
         <Sea maxHeight={maxHeight} />
         <Floor maxHeight={maxHeight} />
         <Clouds />
