@@ -2,6 +2,7 @@ import {
   BoxBufferGeometry,
   BufferGeometry,
   CylinderGeometry,
+  MeshStandardMaterial,
   SphereGeometry,
   Vector2,
 } from "three";
@@ -55,6 +56,21 @@ const makeStone = (height: number, position: Vector2) => {
   return geometry;
 };
 
+function makeTree(height: number, position: Vector2) {
+  const treeHeight = Math.random() * 1 + 1.25;
+
+  const geometry = new CylinderGeometry(0, 1.5, treeHeight, 3);
+  geometry.translate(position.x, height + treeHeight * 0 + 1, position.y);
+
+  const geometry2 = new CylinderGeometry(0, 1.15, treeHeight, 3);
+  geometry2.translate(position.x, height + treeHeight * 0.6 + 1, position.y);
+
+  const geometry3 = new CylinderGeometry(0, 0.8, treeHeight, 3);
+  geometry3.translate(position.x, height + treeHeight * 1.25 + 1, position.y);
+
+  return mergeBufferGeometries([geometry, geometry2, geometry3]);
+}
+
 export default function Hexagons(props: HexagonProps) {
   const maxHeights = getMaxHeights(props.maxHeight);
   const textures = useTexture(textureAssets);
@@ -107,6 +123,13 @@ export default function Hexagons(props: HexagonProps) {
         }
       } else if (height > maxHeights.dirt) {
         mergedHexagons.dirt = mergeBufferGeometries([mergedHexagons.dirt, hexagon]);
+
+        if (Math.random() > 0.8) {
+          mergedHexagons.grass = mergeBufferGeometries([
+            mergedHexagons.grass,
+            makeTree(height, position),
+          ]);
+        }
       } else if (height > maxHeights.grass) {
         mergedHexagons.grass = mergeBufferGeometries([mergedHexagons.grass, hexagon]);
       } else if (height > maxHeights.sand) {
