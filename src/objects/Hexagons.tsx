@@ -1,4 +1,10 @@
-import { BoxBufferGeometry, BufferGeometry, CylinderGeometry, Vector2 } from "three";
+import {
+  BoxBufferGeometry,
+  BufferGeometry,
+  CylinderGeometry,
+  SphereGeometry,
+  Vector2,
+} from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { useMemo } from "react";
 import { MeshProps } from "@react-three/fiber";
@@ -12,6 +18,11 @@ interface HexagonProps extends MeshProps {
   pseudoRadius: number;
   gridLength: number;
   maxHeight: number;
+}
+
+interface Tile {
+  hexagon: CylinderGeometry;
+  position: Vector2;
 }
 
 // Generates max heights for each of the tile types
@@ -34,13 +45,23 @@ const makeHexagon = (height: number, position: Vector2) => {
   return hexagonGeometry;
 };
 
+const makeStone = (height: number, position: Vector2) => {
+  const px = Math.random() * 0.4;
+  const pz = Math.random() * 0.4;
+
+  const geometry = new SphereGeometry(Math.random() * 0.3 + 0.1, 7, 7);
+  geometry.translate(position.x + px, height, position.y + pz);
+
+  return geometry;
+};
+
 export default function Hexagons(props: HexagonProps) {
   const maxHeights = getMaxHeights(props.maxHeight);
   const textures = useTexture(textureAssets);
 
   // Generate each hexagon geometry individually
   const hexagons = useMemo(() => {
-    let hexagons = [] as CylinderGeometry[];
+    let hexagons = [] as Tile[];
 
     const simplex = new SimplexNoise();
 
@@ -52,7 +73,10 @@ export default function Hexagons(props: HexagonProps) {
 
         let noise = (simplex.noise2D(i * 0.1, j * 0.1) + 1) * 0.5; // Shrink then normalize the noise data
         noise = Math.pow(noise, 1.5);
-        hexagons.push(makeHexagon(noise * props.maxHeight, position));
+        hexagons.push({
+          hexagon: makeHexagon(noise * props.maxHeight, position),
+          position,
+        });
       }
     }
 
@@ -69,17 +93,31 @@ export default function Hexagons(props: HexagonProps) {
       grass: new BoxBufferGeometry(0, 0, 0),
     };
 
-    for (let hexagon of hexagons) {
+    for (let { hexagon, position } of hexagons) {
       const height = hexagon.parameters.height;
 
       if (height > maxHeights.stone) {
         mergedHexagons.stone = mergeBufferGeometries([mergedHexagons.stone, hexagon]);
+
+        if (Math.random() > 0.8) {
+          mergedHexagons.stone = mergeBufferGeometries([
+            mergedHexagons.stone,
+            makeStone(height, position),
+          ]);
+        }
       } else if (height > maxHeights.dirt) {
         mergedHexagons.dirt = mergeBufferGeometries([mergedHexagons.dirt, hexagon]);
       } else if (height > maxHeights.grass) {
         mergedHexagons.grass = mergeBufferGeometries([mergedHexagons.grass, hexagon]);
       } else if (height > maxHeights.sand) {
         mergedHexagons.sand = mergeBufferGeometries([mergedHexagons.sand, hexagon]);
+
+        if (Math.random() > 0.8) {
+          mergedHexagons.stone = mergeBufferGeometries([
+            mergedHexagons.stone,
+            makeStone(height, position),
+          ]);
+        }
       } else if (height > maxHeights.dirt2) {
         mergedHexagons.dirt2 = mergeBufferGeometries([mergedHexagons.dirt2, hexagon]);
       }
