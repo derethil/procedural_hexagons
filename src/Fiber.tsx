@@ -4,6 +4,7 @@ import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei
 import ThreeConfig from "./ThreeConfig";
 import Hexagons from "./objects/Hexagons";
 import { envmapAssets } from "./assets";
+import { Color } from "three";
 
 export default function Fiber() {
   return (
@@ -19,11 +20,19 @@ export default function Fiber() {
         enablePan={false}
       />
 
+      <pointLight
+        position={[10, 20, 10]}
+        args={[new Color("#FFCB8E").convertSRGBToLinear().convertSRGBToLinear(), 80, 200]}
+        castShadow
+        shadow-mapSize-width={512}
+        shadow-mapSize-height={512}
+        shadow-camera-near={0.5}
+        shadow-camera-far={500}
+      />
+
       <Suspense fallback={null}>
         <Environment files={envmapAssets.main} />
-        <Hexagons pseudoRadius={20} maxHeight={10}>
-          <meshStandardMaterial flatShading />
-        </Hexagons>
+        <Hexagons pseudoRadius={20} maxHeight={10}></Hexagons>
       </Suspense>
     </Canvas>
   );
