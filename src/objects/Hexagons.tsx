@@ -1,17 +1,17 @@
+import { useMemo } from "react";
+import SimplexNoise from "simplex-noise";
+
 import {
   BoxBufferGeometry,
   BufferGeometry,
   CylinderGeometry,
-  MeshStandardMaterial,
   SphereGeometry,
   Vector2,
 } from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
-import { useMemo } from "react";
 import { MeshProps } from "@react-three/fiber";
-
-import SimplexNoise from "simplex-noise";
 import { useTexture } from "@react-three/drei";
+
 import { textureAssets } from "../assets";
 import HexagonGroup from "./HexagonGroup";
 

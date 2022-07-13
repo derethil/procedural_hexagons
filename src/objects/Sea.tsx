@@ -1,6 +1,7 @@
+import { Color } from "three";
 import { useTexture } from "@react-three/drei";
 import { MeshProps } from "@react-three/fiber";
-import { Color } from "three";
+
 import { textureAssets } from "../assets";
 
 interface SeaProps extends MeshProps {

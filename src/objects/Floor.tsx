@@ -1,6 +1,7 @@
+import { DoubleSide } from "three";
 import { useTexture } from "@react-three/drei";
 import { GroupProps } from "@react-three/fiber";
-import { DoubleSide } from "three";
+
 import { textureAssets } from "../assets";
 
 interface FloorProps extends GroupProps {

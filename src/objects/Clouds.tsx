@@ -1,7 +1,8 @@
 import { useMemo } from "react";
-import { MeshProps } from "@react-three/fiber";
-import { BufferGeometry, SphereGeometry } from "three";
+
+import { SphereGeometry } from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils";
+import { MeshProps } from "@react-three/fiber";
 
 interface CloudProps extends MeshProps {}
 

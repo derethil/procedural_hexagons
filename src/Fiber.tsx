@@ -1,13 +1,15 @@
 import { Suspense } from "react";
+import { Color } from "three";
 import { Canvas } from "@react-three/fiber";
 import { Environment, OrbitControls, PerspectiveCamera } from "@react-three/drei";
+
 import ThreeConfig from "./ThreeConfig";
 import Hexagons from "./objects/Hexagons";
-import { envmapAssets } from "./assets";
-import { Color } from "three";
 import Sea from "./objects/Sea";
 import Floor from "./objects/Floor";
 import Clouds from "./objects/Clouds";
+
+import { envmapAssets } from "./assets";
 
 export default function Fiber() {
   const maxHeight = 10;

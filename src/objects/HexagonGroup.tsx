@@ -1,5 +1,5 @@
-import { MeshProps } from "@react-three/fiber";
 import { BufferGeometry, Texture } from "three";
+import { MeshProps } from "@react-three/fiber";
 
 type HexagonGroupProps = {
   geometry: BufferGeometry;
