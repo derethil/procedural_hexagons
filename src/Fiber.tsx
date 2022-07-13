@@ -45,7 +45,7 @@ export default function Fiber({ seed }: { seed: string }) {
         <pointLight
           args={[
             new Color("#FFCB8E").convertSRGBToLinear().convertSRGBToLinear(),
-            20,
+            8,
             200,
           ]}
           position={[0, -20, 0]}
