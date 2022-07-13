@@ -3,8 +3,11 @@ import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUt
 import { useMemo } from "react";
 import { MeshProps } from "@react-three/fiber";
 
+import SimplexNoise from "simplex-noise";
+
 type HexagonProps = {
   pseudoRadius: number;
+  maxHeight: number;
 } & MeshProps;
 
 // Converts tile index to position in the scene
@@ -22,11 +25,16 @@ export default function Hexagons(props: HexagonProps) {
   const hexagons = useMemo(() => {
     let hexagons = [] as CylinderGeometry[];
 
+    const simplex = new SimplexNoise();
+
     for (let i = -props.pseudoRadius; i <= props.pseudoRadius; i++) {
       for (let j = -props.pseudoRadius; j <= props.pseudoRadius; j++) {
         const position = tileToPosition(new Vector2(i, j));
         if (position.length() > props.pseudoRadius) continue;
-        hexagons.push(makeHexagon(3, position));
+
+        let noise = (simplex.noise2D(i * 0.1, j * 0.1) + 1) * 0.5;
+        noise = Math.pow(noise, 1.5);
+        hexagons.push(makeHexagon(noise * props.maxHeight, position));
       }
     }
 
