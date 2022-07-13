@@ -3,7 +3,9 @@ import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUt
 import { useMemo } from "react";
 import { MeshProps } from "@react-three/fiber";
 
-type HexagonProps = {} & MeshProps;
+type HexagonProps = {
+  pseudoRadius: number;
+} & MeshProps;
 
 // Converts tile index to position in the scene
 const tileToPosition = (tile: Vector2) => {
@@ -20,10 +22,10 @@ export default function Hexagons(props: HexagonProps) {
   const hexagons = useMemo(() => {
     let hexagons = [] as CylinderGeometry[];
 
-    for (let i = -15; i <= 15; i++) {
-      for (let j = -15; j <= 15; j++) {
+    for (let i = -props.pseudoRadius; i <= props.pseudoRadius; i++) {
+      for (let j = -props.pseudoRadius; j <= props.pseudoRadius; j++) {
         const position = tileToPosition(new Vector2(i, j));
-        if (position.length() > 16) continue;
+        if (position.length() > props.pseudoRadius) continue;
         hexagons.push(makeHexagon(3, position));
       }
     }

@@ -15,7 +15,7 @@ export default function Fiber() {
 
       <OrbitControls dampingFactor={0.05} enableDamping />
 
-      <Hexagons>
+      <Hexagons pseudoRadius={15}>
         <meshStandardMaterial flatShading />
       </Hexagons>
     </Canvas>
