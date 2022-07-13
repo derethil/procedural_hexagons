@@ -9,7 +9,7 @@ type HexagonGroupProps = {
 export default function HexagonGroup(props: HexagonGroupProps) {
   return (
     <mesh {...props} geometry={props.geometry} castShadow receiveShadow>
-      <meshPhysicalMaterial envMapIntensity={0.3} map={props.texture} />
+      <meshPhysicalMaterial envMapIntensity={0.135} map={props.texture} />
     </mesh>
   );
 }

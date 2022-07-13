@@ -12,7 +12,7 @@ export default function Fiber() {
   const maxHeight = 10;
 
   return (
-    <Canvas>
+    <Canvas legacy={true}>
       <ThreeConfig />
 
       <PerspectiveCamera position={[0, 25, 50]} makeDefault />
