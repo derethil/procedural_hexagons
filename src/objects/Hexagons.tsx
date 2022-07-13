@@ -1,4 +1,4 @@
-import { BoxBufferGeometry, CylinderGeometry, Vector2 } from "three";
+import { BoxBufferGeometry, BufferGeometry, CylinderGeometry, Vector2 } from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
 import { useMemo } from "react";
 import { MeshProps } from "@react-three/fiber";
@@ -6,6 +6,7 @@ import { MeshProps } from "@react-three/fiber";
 import SimplexNoise from "simplex-noise";
 import { useTexture } from "@react-three/drei";
 import { textureAssets } from "../assets";
+import HexagonGroup from "./HexagonGroup";
 
 type HexagonProps = {
   pseudoRadius: number;
@@ -56,15 +57,42 @@ export default function Hexagons(props: HexagonProps) {
     return hexagons;
   }, [props.maxHeight, props.pseudoRadius]);
 
-  // Merge all hexagons into a single geometry
-  const mergedHexagons = useMemo(() => {
-    const base = new BoxBufferGeometry(0, 0, 0);
-    return mergeBufferGeometries([base, ...hexagons]);
-  }, [hexagons]);
+  // Merge all hexagons into their respective geometries
+  const mergedHexagonGeometries = useMemo(() => {
+    let mergedHexagons: { [key: string]: BufferGeometry } = {
+      stone: new BoxBufferGeometry(0, 0, 0),
+      dirt: new BoxBufferGeometry(0, 0, 0),
+      dirt2: new BoxBufferGeometry(0, 0, 0),
+      sand: new BoxBufferGeometry(0, 0, 0),
+      grass: new BoxBufferGeometry(0, 0, 0),
+    };
+
+    for (let hexagon of hexagons) {
+      const height = hexagon.parameters.height;
+
+      if (height > maxHeights.stone) {
+        mergedHexagons.stone = mergeBufferGeometries([mergedHexagons.stone, hexagon]);
+      } else if (height > maxHeights.dirt) {
+        mergedHexagons.dirt = mergeBufferGeometries([mergedHexagons.dirt, hexagon]);
+      } else if (height > maxHeights.grass) {
+        mergedHexagons.grass = mergeBufferGeometries([mergedHexagons.grass, hexagon]);
+      } else if (height > maxHeights.sand) {
+        mergedHexagons.sand = mergeBufferGeometries([mergedHexagons.sand, hexagon]);
+      } else if (height > maxHeights.dirt2) {
+        mergedHexagons.dirt2 = mergeBufferGeometries([mergedHexagons.dirt2, hexagon]);
+      }
+    }
+
+    return mergedHexagons;
+  }, [hexagons, maxHeights]);
 
   return (
-    <mesh geometry={mergedHexagons} {...props}>
-      {props.children}
-    </mesh>
+    <>
+      <HexagonGroup geometry={mergedHexagonGeometries.stone} texture={textures.stone} />
+      <HexagonGroup geometry={mergedHexagonGeometries.dirt} texture={textures.dirt} />
+      <HexagonGroup geometry={mergedHexagonGeometries.grass} texture={textures.grass} />
+      <HexagonGroup geometry={mergedHexagonGeometries.sand} texture={textures.sand} />
+      <HexagonGroup geometry={mergedHexagonGeometries.dirt2} texture={textures.dirt2} />
+    </>
   );
 }
