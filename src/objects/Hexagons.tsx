@@ -8,10 +8,11 @@ import { useTexture } from "@react-three/drei";
 import { textureAssets } from "../assets";
 import HexagonGroup from "./HexagonGroup";
 
-type HexagonProps = {
+interface HexagonProps extends MeshProps {
   pseudoRadius: number;
+  gridLength: number;
   maxHeight: number;
-} & MeshProps;
+}
 
 // Generates max heights for each of the tile types
 const getMaxHeights = (maxHeight: number) => ({
@@ -43,8 +44,9 @@ export default function Hexagons(props: HexagonProps) {
 
     const simplex = new SimplexNoise();
 
-    for (let i = -props.pseudoRadius; i <= props.pseudoRadius; i++) {
-      for (let j = -props.pseudoRadius; j <= props.pseudoRadius; j++) {
+    const max = props.gridLength * 0.5;
+    for (let i = -max; i <= max; i++) {
+      for (let j = -max; j <= max; j++) {
         const position = tileToPosition(new Vector2(i, j));
         if (position.length() > props.pseudoRadius) continue;
 
@@ -55,7 +57,7 @@ export default function Hexagons(props: HexagonProps) {
     }
 
     return hexagons;
-  }, [props.maxHeight, props.pseudoRadius]);
+  }, [props.maxHeight, props.pseudoRadius, props.gridLength]);
 
   // Merge all hexagons into their respective geometries
   const mergedHexagonGeometries = useMemo(() => {

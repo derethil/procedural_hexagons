@@ -5,8 +5,12 @@ import ThreeConfig from "./ThreeConfig";
 import Hexagons from "./objects/Hexagons";
 import { envmapAssets } from "./assets";
 import { Color } from "three";
+import Sea from "./objects/Sea";
+import Floor from "./objects/Floor";
 
 export default function Fiber() {
+  const maxHeight = 10;
+
   return (
     <Canvas>
       <ThreeConfig />
@@ -14,7 +18,7 @@ export default function Fiber() {
       <PerspectiveCamera position={[0, 25, 50]} makeDefault />
 
       <OrbitControls
-        dampingFactor={0.5}
+        dampingFactor={0.05}
         minDistance={35}
         position={[0, 10, 0]}
         enablePan={false}
@@ -32,7 +36,9 @@ export default function Fiber() {
 
       <Suspense fallback={null}>
         <Environment files={envmapAssets.main} />
-        <Hexagons pseudoRadius={20} maxHeight={10}></Hexagons>
+        <Hexagons pseudoRadius={16} gridLength={40} maxHeight={maxHeight}></Hexagons>
+        <Sea maxHeight={maxHeight} />
+        <Floor maxHeight={maxHeight} />
       </Suspense>
     </Canvas>
   );
