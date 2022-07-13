@@ -7,6 +7,7 @@ import { envmapAssets } from "./assets";
 import { Color } from "three";
 import Sea from "./objects/Sea";
 import Floor from "./objects/Floor";
+import Clouds from "./objects/Clouds";
 
 export default function Fiber() {
   const maxHeight = 10;
@@ -39,6 +40,7 @@ export default function Fiber() {
         <Hexagons pseudoRadius={16} gridLength={40} maxHeight={maxHeight}></Hexagons>
         <Sea maxHeight={maxHeight} />
         <Floor maxHeight={maxHeight} />
+        <Clouds />
       </Suspense>
     </Canvas>
   );
