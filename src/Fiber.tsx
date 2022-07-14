@@ -23,9 +23,9 @@ export default function Fiber({ seed }: { seed: string }) {
 
         <OrbitControls
           dampingFactor={0.05}
-          minDistance={35}
+          minDistance={0}
           position={[0, 10, 0]}
-          enablePan={false}
+          enablePan={true}
         />
 
         <pointLight
@@ -36,8 +36,8 @@ export default function Fiber({ seed }: { seed: string }) {
             200,
           ]}
           castShadow
-          shadow-mapSize-width={512}
-          shadow-mapSize-height={512}
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
           shadow-camera-near={0.5}
           shadow-camera-far={500}
         />
