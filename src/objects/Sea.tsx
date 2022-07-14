@@ -12,7 +12,7 @@ export default function Sea(props: SeaProps) {
   const waterTexture = useTexture(textureAssets.water);
 
   return (
-    <mesh {...props} receiveShadow position={[0, props.maxHeight * 0.1, 0]}>
+    <mesh {...props} receiveShadow position={[0, props.maxHeight * 0.1 + 0.1, 0]}>
       <cylinderGeometry attach="geometry" args={[17, 17, props.maxHeight * 0.2, 50]} />
       <meshPhysicalMaterial
         attach="material"
@@ -20,12 +20,12 @@ export default function Sea(props: SeaProps) {
         ior={1.4}
         transmission={1}
         transparent
-        thickness={1.5}
+        thickness={0}
         envMapIntensity={0.2}
         roughness={1}
         metalness={0.025}
-        roughnessMap={waterTexture}
         metalnessMap={waterTexture}
+        roughnessMap={waterTexture}
       />
     </mesh>
   );

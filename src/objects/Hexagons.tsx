@@ -95,7 +95,7 @@ export default function Hexagons(props: HexagonProps) {
         noise = Math.pow(noise, 1.5);
         console.log(noise * props.maxHeight);
         hexagons.push({
-          hexagon: makeHexagon(Math.max(0.5, noise * props.maxHeight), position),
+          hexagon: makeHexagon(Math.max(0.1, noise * props.maxHeight), position),
           position,
         });
       }

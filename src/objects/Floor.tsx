@@ -20,7 +20,7 @@ export default function Floor(props: FloorProps) {
           side={DoubleSide}
         />
       </mesh>
-      <mesh>
+      <mesh position={[0, -0.55, 0]}>
         <cylinderGeometry
           attach="geometry"
           args={[18.5, 18.5, props.maxHeight * 0.1, 50]}
